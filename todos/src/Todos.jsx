@@ -50,7 +50,7 @@ function handleUpdatedtitle(event){
 }
  function handleSave(){
     let data=[...todos]
-    let updateddata= data.filter((ele,index)=>ele ===selectedtodo? ele.title=selectedtodo.title:ele)
+    let updateddata= data.filter((ele,index)=>ele.id ===selectedtodo.id? ele.title=selectedtodo.title:ele)
     setTodos(updateddata)
     setShowModal(false)
     setSelectedTodo({})
