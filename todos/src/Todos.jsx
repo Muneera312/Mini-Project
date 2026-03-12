@@ -3,17 +3,6 @@ import {Link} from "react-router-dom";
  
 function Todos(){
     const [todos, setTodos]= useState([]) 
-// async function fetchTodos() {
-//     let res=await fetch("http://localhost:5000/api/todo",{
-//         method:"GET"
-//     });
-//     let data= await res.json()
-//     setTodos(data)
-    
-// }
-// useEffect(()=>{
-//     //    fetchTodos()
-// },[])
 const [title, setTitle]=useState("");
 const[showmodal, setShowModal]=useState(false);
 const[selectedtodo, setSelectedTodo]=useState([])
@@ -31,47 +20,21 @@ function handleAdd(){
      setTodos(data)
      setTitle('')
     }
-//     let res=await fetch("http://localhost:5000/api/todo",{
-//         method:"POST",
-//         headers : {
-//             "content-type": "application/json"
-//         },
-//         body: JSON.stringify({title:title})
-        
-//     });
-//     let data= await res.json()
-//     fetchTodos()
 }
-async function handleDelete(index){
+ function handleDelete(index){
     let data=[...todos];
 
     data.splice(index,1)
     setTodos(data)
-    //    let res=await fetch(`http://localhost:5000/api/todo/${id}` ,{
-    //     method:"DELETE"
-    // });
-    // let data= await res.json()
     console.log(data,'data in delete');
-    // setTodos(data)
+    
 
 
 }
-async function handleCheckbox(index, id){
+ function handleCheckbox(index){
        let data=[...todos];
        data[index].completed= !data[index].completed;
        setTodos(data)
-    //   let res=await fetch(`http://localhost:5000/api/todo/${id}` ,{
-    //     method:"PUT",
-    //     headers:{
-    //         "content-type":"application/todo"
-    //     },
-    //     body :JSON.stringify({
-    //         completed : !data[index].completed
-    //     })
-    // });
-    
-    
-    // fetchTodos()
     setShowModal(false)
     setSelectedTodo({})
 }
@@ -85,24 +48,10 @@ function handleUpdatedtitle(event){
      data.title= event.target.value 
      setSelectedTodo(data)
 }
-async function handleSave(){
+ function handleSave(){
     let data=[...todos]
-    let updateddata= data.filter((ele,index)=>ele.id ===selectedtodo.id? ele.title=selectedtodo.title:ele)
+    let updateddata= data.filter((ele,index)=>ele ===selectedtodo? ele.title=selectedtodo.title:ele)
     setTodos(updateddata)
-    setShowModal(false)
-    // let res=await fetch(`http://localhost:5000/api/todo/${selectedtodo._id}` ,{
-    //     method:"PUT",
-    //     headers:{
-    //         "content-type":"application/todo"
-    //     },
-    //     body:JSON.stringify({
-    //         title : selectedtodo.title
-    //     })
-    // });
-    // let data= await res.json()
-    // console.log(data,'data in delete');
-    // setTodos(data)
-    // fetchTodos()
     setShowModal(false)
     setSelectedTodo({})
 }
@@ -142,7 +91,7 @@ return(
             todos.map((ele,index) =>
             (
                 <div key={index} className="d-flex justify-content-center align-items-center gap-2 mt-2">
-                    <input  type="checkbox" onChange={()=>handleCheckbox(index, ele._id)}  checked={ele.completed? "true": ""} />
+                    <input  type="checkbox" onChange={()=>handleCheckbox(index, ele)}  checked={ele.completed? "true": ""} />
             <div className={ele.completed? "text-decoration-line-through":""}>
                 {ele.title}
                 </div>
